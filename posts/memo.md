@@ -17,3 +17,9 @@ category: "frontend"
     - Develop
     - Preview
     - Ship
+
+## TODO
+- 階層別に記事を保存する
+- アプリケーションのページも作る
+- vercel以外でのビルド/デプロイできるか検討する
+- TypeScriptにする [tutorial](https://nextjs.org/learn/excel/typescript)
