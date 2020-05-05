@@ -25,6 +25,10 @@ category: "frontend"
 - 多分このrepositoryが参考になる [material-ui examples nextjs](https://github.com/mui-org/material-ui/tree/master/examples/nextjs)
 
 
+## 地図使う
+- [react simple map](https://www.react-simple-maps.io/)
+- [なんかアプリ作ってる？](https://medium.com/@varunon9/building-choropleth-map-heatmap-of-india-in-javascript-using-react-simple-maps-2e71758fc4df)
+
 ## TODO
 - 階層別に記事を保存する
 - アプリケーションのページも作る
