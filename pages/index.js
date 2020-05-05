@@ -5,7 +5,7 @@ import Link from "next/link";
 import Date from "../components/date";
 import { Button, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Info, Apps, HomeSharp } from "@material-ui/icons";
+import { PhotoCameraRounded, Apps, HomeSharp } from "@material-ui/icons";
 import utilStyles from "../styles/utils.module.css";
 
 export async function getStaticProps() {
@@ -43,7 +43,7 @@ export default function Home({ allPostsData }) {
               variant="contained"
               color="secondary"
             >
-              <Info /> ABOUT
+              <PhotoCameraRounded /> Img
             </Button>
           </Link>
         </Grid>
