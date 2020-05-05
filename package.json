@@ -8,6 +8,9 @@
     "start": "next start"
   },
   "dependencies": {
+    "@material-ui/core": "^4.9.13",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/styles": "^4.9.13",
     "date-fns": "^2.12.0",
     "gray-matter": "^4.0.2",
     "next": "9.3.5",

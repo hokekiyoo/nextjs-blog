@@ -1,9 +1,12 @@
 import Head from "next/head";
 import Layout, { siteTitle } from "../components/layout";
-import utilStyles from "../styles/utils.module.css";
 import { getSortedPostsData } from "../lib/posts";
 import Link from "next/link";
 import Date from "../components/date";
+import { Button, Grid, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { Info, Apps, HomeSharp } from "@material-ui/icons";
+import utilStyles from "../styles/utils.module.css";
 
 export async function getStaticProps() {
   const allPostsData = getSortedPostsData();
@@ -14,21 +17,63 @@ export async function getStaticProps() {
   };
 }
 
+const usemUIStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  button: {
+    padding: theme.spacing(1.0),
+    textAlign: "center",
+    width: "80%",
+  },
+}));
+
 export default function Home({ allPostsData }) {
+  const classes = usemUIStyles();
   return (
     <Layout home>
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <section className={utilStyles.headingMd}>
-        <p>This is a test Page</p>
-        <p>
-          (This is a sample website - you’ll be building a site like this in{" "}
-          <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
-        </p>
-      </section>
+      <Grid container spacing={2}>
+        <Grid item xs={6} sm={4} align="center">
+          <Link href="/about">
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="secondary"
+            >
+              <Info /> ABOUT
+            </Button>
+          </Link>
+        </Grid>
+        <Grid item xs={6} sm={4} align="center">
+          <Link href="/app">
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="secondary"
+            >
+              <Apps /> APP
+            </Button>
+          </Link>
+        </Grid>
+        <Grid item xs={6} sm={4} align="center">
+          <Link href="/">
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="secondary"
+            >
+              <HomeSharp /> Home
+            </Button>
+          </Link>
+        </Grid>
+      </Grid>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={utilStyles.headingLg}>Blog</h2>
+        <h2 className={utilStyles.headingLg} align="center">
+          Recent Articles
+        </h2>
         <ul className={utilStyles.list}>
           {allPostsData.map(({ id, date, title }) => (
             <li className={utilStyles.listItem} key={id}>
@@ -37,7 +82,7 @@ export default function Home({ allPostsData }) {
               </Link>
               <br />
               <small className={utilStyles.lightText}>
-                <Date dateString={date} />
+                Last Update : <Date dateString={date} />
               </small>
             </li>
           ))}
