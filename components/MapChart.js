@@ -1,57 +1,70 @@
-import React, { useEffect, useState } from "react";
-import { csv } from "d3-fetch";
-import { scaleLinear } from "d3-scale";
+import React, { memo } from "react";
 import {
+  ZoomableGroup,
   ComposableMap,
   Geographies,
   Geography,
-  Sphere,
-  Graticule
+  Marker,
 } from "react-simple-maps";
+import { Tooltip } from "@material-ui/core";
+import Link from "next/link";
+import { Category } from "@material-ui/icons";
 
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
-const colorScale = scaleLinear()
-  .domain([0.29, 0.68])
-  .range(["#ffedea", "#ff5233"]);
-
-const MapChart = () => {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    csv(`data/vulnerability.csv`).then(data => {
-      setData(data);
-    });
-  }, []);
-
+const MapChart = (props) => {
+  const article_meta_data = props.data;
   return (
-    <ComposableMap
-      projectionConfig={{
-        rotate: [-10, 0, 0],
-        scale: 147
-      }}
-    >
-      <Sphere stroke="#E4E5E6" strokeWidth={0.5} />
-      <Graticule stroke="#E4E5E6" strokeWidth={0.5} />
-      {data.length > 0 && (
-        <Geographies geography={geoUrl}>
-          {({ geographies }) =>
-            geographies.map(geo => {
-              const d = data.find(s => s.ISO3 === geo.properties.ISO_A3);
-              return (
+    <>
+      <ComposableMap data-tip="" projectionConfig={{ scale: 200 }}>
+        <ZoomableGroup>
+          <Geographies geography={geoUrl}>
+            {({ geographies }) =>
+              geographies.map((geo) => (
                 <Geography
                   key={geo.rsmKey}
                   geography={geo}
-                  fill={d ? colorScale(d["2017"]) : "#F5F4F6"}
+                  style={{
+                    default: {
+                      fill: "#ffccbc",
+                      outline: "none",
+                    },
+                    hover: {
+                      fill: "#ffab91",
+                      outline: "none",
+                    },
+                  }}
                 />
-              );
-            })
-          }
-        </Geographies>
-      )}
-    </ComposableMap>
+              ))
+            }
+          </Geographies>
+          {article_meta_data.map(
+            ({ id, date, category, title, long, lati, s_year, e_year, place }) => {
+              long = parseFloat(long);
+              lati = parseFloat(lati);
+              if (category === "history") {
+                return (
+                  <Marker key={id} coordinates={[long, lati]} fill="#42a5f5">
+                    <Link href="/posts/[id]" as={`/posts/${id}`}>
+                      <Tooltip title={`${place}:${title}`} arrow>
+                        <circle
+                          r={6}
+                          fill="#42a5f5"
+                          stroke="#fff"
+                          strokeWidth={2.5}
+                        />
+                      </Tooltip>
+                    </Link>
+                  </Marker>
+                );
+              }
+            }
+          )}
+        </ZoomableGroup>
+      </ComposableMap>
+    </>
   );
 };
 
-export default MapChart;
+export default memo(MapChart);
