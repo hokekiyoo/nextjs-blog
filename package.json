@@ -21,6 +21,6 @@
     "react-simple-maps": "^2.0.0",
     "react-tooltip": "^4.2.5",
     "remark": "^12.0.0",
-    "remark-html": "^11.0.1"
+    "remark-html": "^13.0.2"
   }
 }
